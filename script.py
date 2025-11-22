@@ -45,8 +45,16 @@ vocab_size = len(global_vocab)
 
 # P(Word | Spam) = (Count(W_i in Spam) + 1) / (Total Words In Spam + V)
 # P(Spam | Word) = P(Word | Spam) . P(Spam) / P(Word)
-word = 'free'
-probability_spam = total_spam_mails / total_samples
-probability_word = global_vocab.get(word, 0) / total_words
-probability_word_spam = (spam_dict.get(word, 0) + 1) / (total_words_in_spam + vocab_size)
-print('Probability of \'', word, '\'=', probability_word_spam * probability_spam / probability_word)
+def calculateProbabilityOfWord(word):
+    probability_spam = total_spam_mails / total_samples
+    probability_word = global_vocab.get(word, 0) / total_words
+    probability_word_spam = (spam_dict.get(word, 0) + 1) / (total_words_in_spam + vocab_size)
+    return probability_word_spam * probability_spam / probability_word
+
+sentence = "Free money for your live!"
+words = nltk.tokenize.word_tokenize(sentence)
+probability = 1.0
+for word in words:
+    probability *= calculateProbabilityOfWord(word)
+
+print("Probability of", sentence, "to be 'spam email' is:", probability) 
