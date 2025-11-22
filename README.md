@@ -51,6 +51,24 @@ P(Word_i | Spam) = \dfrac{Count(Word_i \text{ in spam}) + 1}{\text{Total Words i
 - Vocab size: Tổng số từ vựng độc nhất trong toàn bộ tập dữ liệu.
 
 ### Arithmetic Underflow ###
+```math
+Score_{spam} = P(Spam) \times P(Word_1 | Spam) \times P(Word_2 | Spam) \times P(Word_3 | Spam) \times ...
+```
+
+Do xác suất xuất hiện một từ thường rất nhỏ, phép tính có thể là con số nỏ đến $10^{-200}$, con số này máy tính không thể lưu trữ được và làm tròn xuống 0 -> Cả điểm Ham và Spam đều bằng 0. Mô hình sẽ không so sánh được.
+
+Để giải quyết vấn đề trên, ta sẽ dùng hàm Log để biến phép nhân thành phép cộng.
+```math
+log(A \times B) = log(A) + log(B) 
+```
+```math
+log(Score_{spam}) = log(P(spam)) + log(P(Word_1 | Spam)) + log(P(Word_2 | Spam)) + ...
+```
+
+### Comparision ###
+Để phân loại mail spam hay ham thì ta dựa vào $Score$:
+- $Score_{spam}$ > $Score_{ham}$: Spam
+- $Score_{spam}$ < $Score_{ham}$: Ham
 
 <h2>🛠️ Installation Steps:</h2>
 
@@ -65,4 +83,5 @@ conda env create -f environment.yml
 ```
 git clone https://github.com/tavenguyen/spam-detection.git
 ```
+
 
