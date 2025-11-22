@@ -13,4 +13,5 @@ dependencies:
   - ipykernel
   - opt_einsum
   - pyro-ppl
+  - nltk
 prefix: C:\Users\Admin\miniconda3\envs\bayesian_nw
