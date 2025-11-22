@@ -5,8 +5,11 @@ from nltk.tokenize import word_tokenize
 
 # nltk.download('punkt_tab')
 
-global_vocab = set()
+global_vocab = dict()
 spam_dict = {}
+total_samples = 0
+total_spam_mails = 0
+total_words = 0
 total_words_in_spam = 0
 
 ##################################################################
@@ -23,21 +26,27 @@ while (1):
     words = nltk.tokenize.word_tokenize(message)
 
     for w in words:
-        global_vocab.add(w)
+        global_vocab[w] = global_vocab.get(w, 0) + 1
+        total_words += 1
 
     if(label == 'spam'):
+        total_spam_mails += 1
         for w in words:
             total_words_in_spam += 1
             if w not in spam_dict:
                 spam_dict[w] = 0
             spam_dict[w] += 1
+    total_samples += 1
 
 file_obj.close()
 
 ##################################################################
 vocab_size = len(global_vocab)
 
-# P(Words | Spam) = (Count(W_i in Spam) + 1) / (Total Words In Spam + V)
+# P(Word | Spam) = (Count(W_i in Spam) + 1) / (Total Words In Spam + V)
+# P(Spam | Word) = P(Word | Spam) . P(Spam) / P(Word)
 word = 'free'
-probability = (spam_dict.get(word, 0) + 1) / (total_words_in_spam + vocab_size)
-print('Probability of \'', word, '\'=', probability)
+probability_spam = total_spam_mails / total_samples
+probability_word = global_vocab.get(word, 0) / total_words
+probability_word_spam = (spam_dict.get(word, 0) + 1) / (total_words_in_spam + vocab_size)
+print('Probability of \'', word, '\'=', probability_word_spam * probability_spam / probability_word)
