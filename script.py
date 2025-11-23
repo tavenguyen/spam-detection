@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 import nltk
 import math
 from nltk.tokenize import word_tokenize
