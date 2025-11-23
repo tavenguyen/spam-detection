@@ -58,7 +58,7 @@ def calculateProbability(word, type : bool):
     else:
         return (ham_dict.get(word, 0) + 1) / (total_words_in_ham + vocab_size)
 
-sentence = "You have 1 new message. Call 12345678"
+sentence = "Miễn phí cho tuần đầu tiên!"
 words = nltk.tokenize.word_tokenize(sentence)
 
 # P(Spam)
