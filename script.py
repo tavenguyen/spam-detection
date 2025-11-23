@@ -21,6 +21,9 @@ while (1):
         break
     
     parts = text.strip().split(maxsplit=1)
+    if(len(parts) < 2):
+        continue
+
     label = parts[0]
     message = parts[1]
     
