@@ -94,5 +94,6 @@ conda env create -f environment.yml
 git clone https://github.com/tavenguyen/spam-detection.git
 ```
 
-
+<h2>References</h2>
+- https://www.kaggle.com/datasets/victorhoward2/vietnamese-spam-post-in-social-network
 
